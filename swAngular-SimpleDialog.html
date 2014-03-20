@@ -1,0 +1,19 @@
+<div class="modal fade" id="{{modalId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="options.showHeader">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{{options.heading || "&nbsp;"}}</h4>
+            </div>
+            <div ng-show="content" class="modal-body" ng-bind="content">
+            </div>
+            <div ng-show="htmlContent" class="modal-body" ng-bind="htmlContent"></div>
+            <div class="modal-footer" ng-show="options.showFooter > 0">
+                <button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}"
+                        data-dismiss="{{button.closing?'modal':''}}" ng-bind="button.label"
+                        ng-click="button.callback()"></button>
+            </div>
+        </div>
+    </div>
+</div>
