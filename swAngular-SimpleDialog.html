@@ -8,7 +8,9 @@
             </div>
             <div ng-show="content" class="modal-body" ng-bind="content">
             </div>
-            <div ng-show="htmlContent" class="modal-body" ng-bind="htmlContent"></div>
+            <div ng-show="options.contentUrl" class="modal-body">
+                <div ng-include="options.contentUrl"></div>
+            </div>
             <div class="modal-footer" ng-show="options.showFooter > 0">
                 <button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}"
                         data-dismiss="{{button.closing?'modal':''}}" ng-bind="button.label"

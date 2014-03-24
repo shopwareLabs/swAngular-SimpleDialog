@@ -32,7 +32,7 @@ angular.module('swAngularSimpleDialog', [])
                     if ($scope.options.content) {
                         $scope.content = $scope.options.content;
                     }
-                };
+                }
 
 
 //                if($scope.options && $scope.options.contentUrl) {
