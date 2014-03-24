@@ -1,4 +1,4 @@
-Shopware AngularJs -- Component
+Shopware AngularJs -- swAngular Simple Dialog
 =====================================
 
 This is an Shopware-AngularJs Component, it can be installed via Bower.
@@ -13,7 +13,7 @@ Via [bower](http://bower.io):
 
 
 ###Show Simple Message without Options
-To Show an Message you can prefix an HTML-Element like this:
+To Show a message you can prefix an HTML-Element like this:
 
 	<div simple-dialog="Hallo"></div>
 
