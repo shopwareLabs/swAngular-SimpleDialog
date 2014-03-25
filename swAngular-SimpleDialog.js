@@ -34,15 +34,6 @@ angular.module('swAngularSimpleDialog', [])
                     }
                 }
 
-
-//                if($scope.options && $scope.options.contentUrl) {
-//                    var contentElement = angular.element('<div><div><b>hm</b><div ng-include="\''+$scope.options.contentUrl+'\'"></div></div></div>');
-//                    $compile(contentElement)($scope);
-//                    $scope.content = "";
-//                    console.log('content', contentElement[0]);
-//                    $scope.htmlContent = contentElement;
-//                }
-
                 /**
                  * Construct dialogWrapper, compile and append to body
                  */
