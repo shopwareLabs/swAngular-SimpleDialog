@@ -1,3 +1,7 @@
+var scripts = document.getElementsByTagName("script");
+var pathMap = pathMap || {};
+pathMap['swAngular-SimpleDialog'] = scripts[scripts.length - 1].src;
+
 angular.module('swAngularSimpleDialog', [])
     .directive('swAngularSimpleDialog', function ($compile, $sce) {
         return {
@@ -37,7 +41,7 @@ angular.module('swAngularSimpleDialog', [])
                 /**
                  * Construct dialogWrapper, compile and append to body
                  */
-                var dialogWrapper = angular.element('<div><div><div ng-include="\'/directives/swAngular-SimpleDialog/swAngular-SimpleDialog.html\'"></div></div></div>');
+                var dialogWrapper = angular.element('<div><div><div ng-include="\'' + pathMap['swAngular-SimpleDialog'].substring(0, pathMap['swAngular-SimpleDialog'].lastIndexOf('/') + 1) + 'swAngular-SimpleDialog.html\'"></div></div></div>');
                 $compile(dialogWrapper)($scope);
                 $('body').append(dialogWrapper);
 
