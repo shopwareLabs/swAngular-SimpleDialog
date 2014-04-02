@@ -1,7 +1,3 @@
-var scripts = document.getElementsByTagName("script");
-var pathMap = pathMap || {};
-pathMap['swAngular-SimpleDialog'] = scripts[scripts.length - 1].src;
-
 angular.module('swAngularSimpleDialog', [])
     .directive('swAngularSimpleDialog', function ($compile, $sce) {
         return {
@@ -41,7 +37,30 @@ angular.module('swAngularSimpleDialog', [])
                 /**
                  * Construct dialogWrapper, compile and append to body
                  */
-                var dialogWrapper = angular.element('<div><div><div ng-include="\'' + pathMap['swAngular-SimpleDialog'].substring(0, pathMap['swAngular-SimpleDialog'].lastIndexOf('/') + 1) + 'swAngular-SimpleDialog.html\'"></div></div></div>');
+                var dialogWrapper = angular.element(
+                    ['<div>',
+                     '    <div>',
+                     '        <div class="modal fade" id="{{modalId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">',
+                     '            <div class="modal-dialog">',
+                     '                <div class="modal-content">',
+                     '                    <div class="modal-header" ng-show="options.showHeader">',
+                     '                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
+                     '                        <h4 class="modal-title" id="myModalLabel">{{options.heading || "&nbsp;"}}</h4>',
+                     '                    </div>',
+                     '                    <div ng-show="content" class="modal-body" ng-bind="content">',
+                     '                    </div>',
+                     '                    <div ng-show="options.contentUrl" class="modal-body">',
+                     '                        <div ng-include="options.contentUrl"></div>',
+                     '                    </div>',
+                     '                    <div class="modal-footer" ng-show="options.showFooter > 0">',
+                     '                        <button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}" data-dismiss="{{button.closing?\'modal\':\'\'}}" ng-bind="button.label" ng-click="button.callback()"></button>',
+                     '                    </div>',
+                     '                 </div>',
+                     '             </div>',
+                     '         </div>',
+                     '    </div>',
+                     '</div>'
+                    ].join('\n'));
                 $compile(dialogWrapper)($scope);
                 $('body').append(dialogWrapper);
 
