@@ -3,15 +3,10 @@ angular.module('swAngularSimpleDialog', [])
         return {
             restrict: "A",
             scope: {
-                instantContent: '@swAngularSimpleDialog',
+                content: '@swAngularSimpleDialog',
                 options: '=swOptions'
             },
             link: function ($scope, $element) {
-                $scope.modalId = parseInt(Math.random() * 10000);
-
-                $scope.content = $scope.instantContent;
-                $scope.htmlContent = "";
-
                 /**
                  * Options
                  */
@@ -37,30 +32,33 @@ angular.module('swAngularSimpleDialog', [])
                 /**
                  * Construct dialogWrapper, compile and append to body
                  */
-                var dialogWrapper = angular.element(
-                    ['<div>',
-                     '    <div>',
-                     '        <div class="modal fade" id="{{modalId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">',
-                     '            <div class="modal-dialog">',
-                     '                <div class="modal-content">',
-                     '                    <div class="modal-header" ng-show="options.showHeader">',
-                     '                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
-                     '                        <h4 class="modal-title" id="myModalLabel">{{options.heading || "&nbsp;"}}</h4>',
-                     '                    </div>',
-                     '                    <div ng-show="content" class="modal-body" ng-bind="content">',
-                     '                    </div>',
-                     '                    <div ng-show="options.contentUrl" class="modal-body">',
-                     '                        <div ng-include="options.contentUrl"></div>',
-                     '                    </div>',
-                     '                    <div class="modal-footer" ng-show="options.showFooter > 0">',
-                     '                        <button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}" data-dismiss="{{button.closing?\'modal\':\'\'}}" ng-bind="button.label" ng-click="button.callback()"></button>',
-                     '                    </div>',
-                     '                 </div>',
-                     '             </div>',
-                     '         </div>',
-                     '    </div>',
-                     '</div>'
-                    ].join('\n'));
+                var dialogWrapper = angular.element('<div class="modal fade {{options.classes}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>');
+                var modalDialog = angular.element('<div class="modal-dialog"></div>');
+                var modalContent = angular.element('<div class="modal-content"></div>');
+                var modalHeader = angular.element([
+                    '<div class="modal-header" ng-show="options.showHeader">',
+                    '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
+                    '<h4 class="modal-title" id="myModalLabel">{{options.heading || "&nbsp;"}}</h4>',
+                    '</div>'
+                ].join('\n'));
+                var normalContent = angular.element('<div ng-show="content" class="modal-body" ng-bind="content"></div>');
+                var externalContent = angular.element('<div ng-show="options.contentUrl" class="modal-body"></div>');
+                var externalInclude = angular.element('<div ng-include="\''+$scope.options.contentUrl+'\'"></div>');
+                var modalFooter = angular.element([
+                    '<div class="modal-footer" ng-show="options.showFooter > 0">',
+                    '<button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}" data-dismiss="{{button.closing?\'modal\':\'\'}}" ng-bind="button.label" ng-click="button.callback()"></button>',
+                    '</div>'
+                ].join('\n'));
+
+                $compile(externalInclude)($scope.$parent);
+
+                dialogWrapper.append(modalDialog);
+                modalDialog.append(modalContent);
+                modalContent.append(modalHeader);
+                modalContent.append(normalContent);
+                modalContent.append(externalContent);
+                externalContent.append(externalInclude);
+                modalContent.append(modalFooter);
                 $compile(dialogWrapper)($scope);
                 $('body').append(dialogWrapper);
 
@@ -68,7 +66,7 @@ angular.module('swAngularSimpleDialog', [])
                  * Bind click event to open dialogWrapper
                  */
                 $element.bind('click', function () {
-                    $('#' + $scope.modalId).modal(modalOptions);
+                    dialogWrapper.modal(modalOptions);
                 });
             }
         };
