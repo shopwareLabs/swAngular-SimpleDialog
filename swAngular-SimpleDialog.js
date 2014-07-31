@@ -41,17 +41,17 @@ angular.module('swAngularSimpleDialog', [])
                 var modalDialog = angular.element('<div class="modal-dialog"></div>');
                 var modalContent = angular.element('<div class="modal-content"></div>');
                 var modalHeader = angular.element([
-                    '<div class="modal-header" ng-show="options.showHeader">',
+                    '<div class="modal-header" data-ng-show="options.showHeader">',
                     '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>',
                     '<h4 class="modal-title" id="myModalLabel">{{options.heading || "&nbsp;"}}</h4>',
                     '</div>'
                 ].join('\n'));
-                var normalContent = angular.element('<div ng-show="content" class="modal-body" ng-bind="content"></div>');
-                var externalContent = angular.element('<div ng-show="options.contentUrl" class="modal-body"></div>');
-                var externalInclude = angular.element('<div ng-include="\'' + $scope.options.contentUrl + '\'"></div>');
+                var normalContent = angular.element('<div data-ng-show="content" class="modal-body" data-ng-bind="content"></div>');
+                var externalContent = angular.element('<div data-ng-show="options.contentUrl" class="modal-body"></div>');
+                var externalInclude = angular.element('<div data-ng-include="\'' + $scope.options.contentUrl + '\'"></div>');
                 var modalFooter = angular.element([
-                    '<div class="modal-footer" ng-show="options.showFooter > 0">',
-                    '<button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}" data-dismiss="{{button.closing?\'modal\':\'\'}}" ng-bind="button.label" ng-click="button.callback()"></button>',
+                    '<div class="modal-footer" data-ng-show="options.showFooter > 0">',
+                    '<button data-ng-repeat="button in options.buttons" type="button" class="btn {{button.classes}}" data-dismiss="{{button.closing?\'modal\':\'\'}}" data-ng-bind="button.label" data-ng-click="button.callback()"></button>',
                     '</div>'
                 ].join('\n'));
 
